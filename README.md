@@ -56,18 +56,18 @@ flask-tutorial/
      ```
 4. Instala las dependencias:
    ```bash
-   pip install -r requirements.txt
+   pip install flask
    ```
 5. Inicializa la base de datos:
    ```bash
-   flask init-db
+   flask --app flaskr init-db
    ```
 
 ## Uso
 
 1. Ejecuta la aplicación:
    ```bash
-   flask run
+   flask --app flaskr run
    ```
 2. Abre tu navegador y ve a `http://localhost:5000`
 3. Regístrate o inicia sesión
