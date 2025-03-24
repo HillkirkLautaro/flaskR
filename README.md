@@ -39,29 +39,24 @@ flask-tutorial/
 - SQLite3
 
 ## Instalación
+```bash
+1. Clonar el repositorio
+git clone [URL_DEL_REPOSITORIO]
 
-1. Clona el repositorio
-2. Crea un entorno virtual:
-   ```bash
-   python -m venv venv
-   ```
-3. Activa el entorno virtual:
-   - Windows:
-     ```bash
-     venv\Scripts\activate
-     ```
-   - Unix/MacOS:
-     ```bash
-     source venv/bin/activate
-     ```
-4. Instala las dependencias:
-   ```bash
-   pip install flask
-   ```
-5. Inicializa la base de datos:
-   ```bash
-   flask --app flaskr init-db
-   ```
+2. Crear y activar entorno virtual
+python -m venv venv
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # Unix/MacOS
+
+3. Instalar dependencias
+pip install -r requirements.txt
+
+4. Inicializar la base de datos
+flask --app flaskr init-db
+
+5. Ejecutar la aplicación
+flask --app flaskr run
+```
 
 ## Uso
 
