@@ -1,19 +1,26 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Create New Post{% endblock %}</h1>
+  <h1>{% block title %}New Post{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-  <form class="create-form" method="post">
-    <div class="form-group">
-      <label for="title">Title</label>
-      <input type="text" name="title" id="title" class="form-control" required>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.title.label(class="form-label") }}
+        {{ form.title(class="form-control") }}
+        {% for error in form.title.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
     </div>
-    <div class="form-group">
-      <label for="body">Content</label>
-      <textarea name="body" id="body" class="form-control" rows="5" required></textarea>
+    <div>
+        {{ form.body.label(class="form-label") }}
+        {{ form.body(class="form-control", rows=5) }}
+        {% for error in form.body.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
     </div>
-    <button type="submit" class="btn-submit">Create Post</button>
+    {{ form.submit(class="btn btn-primary") }}
   </form>
 {% endblock %}
