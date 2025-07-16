@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hello guys, this is my Flask App</title>
+  <meta charset="UTF-8">
+  <title>Mi App con Flask y Jinja2</title>
 </head>
 <body>
-  <h1>flaskR</h1>
-  <p>This is a simple Flask app</p>
-  <div>
-    <button>Click me</button>
-  </div>
-  <p>This is an HTML file served with Flask.</p>
+  <h1>Hola, {{ nombre }}!</h1>
+  <p>Esta es una página renderizada con Jinja2 en Flask.</p>
+
+  {% if nombre == "Lautaro" %}
+    <p>¡Bienvenido, creador!</p>
+  {% else %}
+    <p>Hola, visitante.</p>
+  {% endif %}
 </body>
 </html>
