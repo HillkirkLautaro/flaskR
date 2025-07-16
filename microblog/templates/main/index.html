@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Feed Principal{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  {% for post in posts %}
+    <article class="post">
+      <header>
+        <div>
+          <p class="post-author">Publicado por: <a href="{{ url_for('main.profile', user_id=post.author_id) }}">{{ post.author_email }}</a></p>
+          <p class="post-date">el {{ post.created_at }}</p>
+        </div>
+      </header>
+      <p class="body">{{ post.content }}</p>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% else %}
+    <p>Aún no hay publicaciones. ¡Sé el primero!</p>
+  {% endfor %}
+{% endblock %}

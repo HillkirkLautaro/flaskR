@@ -1,8 +1,4 @@
 Flask
-Flask-WTF
-Flask-Login
-Werkzeug
-Flask-Talisman
-Flask-Limiter
-Flask-Session
-Flask-HTTPAuth
+supabase
+python-dotenv
+gunicorn
