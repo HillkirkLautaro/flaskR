@@ -15,19 +15,17 @@ def home():
 @app.route('/<path:path>')
 def serve_static(path):
     try:
-        return send_from_directory('../static', path)
+        # Si la ruta es para un archivo estático, servirlo
+        if path.startswith('static/') or '.' in path:
+            return send_from_directory('../static', path.split('/')[-1])
+        # Si no, intentar servir el index.html (para SPA)
+        return send_from_directory('../static', 'index.html')
     except Exception as e:
-        app.logger.error(f"Error serving static file {path}: {str(e)}")
+        app.logger.error(f"Error serving file {path}: {str(e)}")
         return jsonify({"error": "File not found"}), 404
-
-# Favicon route
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory('../static', 'favicon.ico'), 200, {'Content-Type': 'image/x-icon'}
 
 # This is required for Vercel
 def handler(event, context):
-    import json
     from werkzeug.test import create_environ
     
     # Parse the event into a WSGI environment
@@ -37,12 +35,18 @@ def handler(event, context):
         headers=dict(event.get('headers', {})),
         query_string=event.get('queryStringParameters', {}),
         data=event.get('body', ''),
-        content_type=event.get('headers', {}).get('Content-Type', '')
+        content_type=event.get('headers', {}).get('content-type', '')
     )
     
     # Call the app with the environment
     with app.request_context(environ):
-        response = app.full_dispatch_request()
+        try:
+            response = app.full_dispatch_request()
+        except Exception as e:
+            return {
+                'statusCode': 500,
+                'body': str(e)
+            }
     
     # Convert the response into the format expected by Vercel
     return {
