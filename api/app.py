@@ -9,14 +9,15 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__, static_folder='../static')
 
-@app.route('/')
-def home():
+@app.route('/<path:path>')
+def serve_static(path):
     try:
-        logger.debug("Serving index.html")
-        return send_from_directory('../static', 'index.html')
+        logger.debug(f"Serving static file: {path}")
+        return send_from_directory('../static', path)
     except Exception as e:
-        logger.error(f"Error serving index.html: {str(e)}", exc_info=True)
-        return jsonify({"error": "Internal Server Error", "details": str(e)}), 500
+        logger.error(f"Error serving file {path}: {str(e)}", exc_info=True)
+        return jsonify({"error": "File not found", "path": path, "details": str(e)}), 404
+
 
 # Ruta para servir archivos estáticos
 @app.route('/<path:path>')
