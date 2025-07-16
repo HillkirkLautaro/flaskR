@@ -12,7 +12,6 @@
       "dest": "api/index.py"
     }
   ],
-  "install": ["pip install -r requirements.txt"],
   "functions": {
     "api/index.py": {
       "maxDuration": 30
