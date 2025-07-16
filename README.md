@@ -80,6 +80,6 @@ MIT License
 
 ## Documentation
 
-[![Documentation](https://docs.google.com/document/d/1cUACB4fodTx8NRdUF3NGW8TbXivWZn6bVH6xnfBgGtg/edit?tab=t.0)
+[Documentation](https://docs.google.com/document/d/1cUACB4fodTx8NRdUF3NGW8TbXivWZn6bVH6xnfBgGtg/edit?tab=t.0)
 
 ---
