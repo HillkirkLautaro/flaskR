@@ -1,6 +1,5 @@
 import os
 import sys
-from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Asegurarse de que el directorio del proyecto esté en el path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -11,9 +10,6 @@ try:
 except ImportError as e:
     print(f"Error importing app: {e}")
     raise
-
-# Asegurarse de que la aplicación esté configurada para trabajar detrás de un proxy
-app = ProxyFix(app)
 
 def handler(event, context):
     return app(event, context)
