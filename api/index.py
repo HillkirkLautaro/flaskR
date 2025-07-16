@@ -2,7 +2,8 @@ import os
 import sys
 
 # Asegurarse de que el directorio del proyecto esté en el path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 
 try:
     from app import app, handler
