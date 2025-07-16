@@ -1,0 +1,29 @@
+# Entornos virtuales
+venv/
+env/
+ENV/
+.venv/
+
+# Archivos de entorno
+.env
+.env.*
+!.env.example
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos de IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+
+# Archivos de registro
+*.log
+
+# Archivos de caché
+.cache/
+.pytest_cache/
