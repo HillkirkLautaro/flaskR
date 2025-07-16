@@ -57,5 +57,3 @@ def handler(event, context):
 # This is needed for Vercel
 if __name__ == '__main__':
     app.run(debug=True)
-
-handler = app
