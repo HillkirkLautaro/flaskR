@@ -1,10 +1,10 @@
-from flask import Flask
+from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__)
 
 @app.route('/')
 def hello():
-    return "<h1>hello flaskR</h1>"
+    return render_template('index.html')
 
 @app.route('/favicon.ico')
 def favicon():
