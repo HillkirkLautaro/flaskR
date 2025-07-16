@@ -20,6 +20,11 @@ def serve_static(path):
         app.logger.error(f"Error serving static file {path}: {str(e)}")
         return jsonify({"error": "File not found"}), 404
 
+# Favicon route
+@app.route('/favicon.ico')
+def favicon():
+    return app.send_static_file('favicon.ico'), 200, {'Content-Type': 'image/x-icon'}
+
 # This is required for Vercel
 def handler(event, context):
     from flask import request
