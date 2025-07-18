@@ -9,9 +9,9 @@ def index():
 
 @main_bp.route('/about')
 def about():
-    return "Esta es una demo con Flask y Supabase en Vercel."
+    return render_template('about.html', titulo='Acerca de', contenido="Esta es una demo con Flask y Supabase en Vercel.")
 
 # Manejo de errores personalizado
 @main_bp.app_errorhandler(404)
 def page_not_found(e):
-    return "Página no encontrada", 404
+    return render_template('404.html'), 404
