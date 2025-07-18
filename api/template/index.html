@@ -1,14 +1,27 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Mi App con Flask y Jinja2</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-  <h1>Hola, {{ nombre }}!</h1>
-  <p>Esta es una página renderizada con Jinja2 en Flask.</p>
-  <p>La fecha actual es: {{ fecha_actual }}</p>
-  <p>Pero si apretas el botón, te llevará a la página de "about".</p>
-  <a href="{{ url_for('main.about') }}"><button>Click me</button></a>
+  <header>
+    <h1>Hola, {{ nombre }}!</h1>
+    <nav>
+      <a href="{{ url_for('main.index') }}">Inicio</a>
+      <a href="{{ url_for('main.about') }}">About</a>
+    </nav>
+  </header>
+  <div class="main-content">
+    <p>Esta es una página renderizada con Jinja2 en Flask.</p>
+    <p>La fecha actual es: {{ fecha_actual }}</p>
+    <p>Pero si apretas el botón, te llevará a la página de "about".</p>
+    <a href="{{ url_for('main.about') }}" class="btn"><button>Click me</button></a>
+  </div>
+  <footer>
+    &copy; 2025 Mi App Flask.
+  </footer>
 </body>
 </html>
