@@ -15,8 +15,3 @@ def about():
 @main_bp.route('/encuesta')
 def encuesta():
     return render_template('encuesta.html', titulo='Encuesta', contenido="Por favor, completa la encuesta para ayudarnos a mejorar.")
-
-# Manejo de errores personalizado
-@main_bp.app_errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404

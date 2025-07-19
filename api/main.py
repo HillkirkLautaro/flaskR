@@ -1,5 +1,5 @@
 
 from api import create_app
 
-# Entry point para Flask/Vercel
+# Crear la entry point de vercel
 app = create_app()
