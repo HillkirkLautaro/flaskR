@@ -2,8 +2,6 @@ import os
 from flask import Flask
 
 def create_app():
-    # Obtener la ruta al directorio actual
-    static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
     # Definir la ruta al directorio de plantillas
     current_dir = os.path.dirname(os.path.abspath(__file__))
     # Definir la ruta al directorio de plantillas
