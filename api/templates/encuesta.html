@@ -9,15 +9,12 @@
     <header>
         <h1>Encuesta</h1>
         <nav>
-            <ul>
-                <li><a href="{{ url_for('main.index') }}">Inicio</a></li>
-                <li><a href="{{ url_for('main.about') }}">Acerca de</a></li>
-                <li><a href="{{ url_for('main.encuesta') }}">Encuesta</a></li>
-            </ul>
+            <a href="{{ url_for('main.index') }}">Inicio</a>
+            <a href="{{ url_for('main.about') }}">About</a>
+            <a href="{{ url_for('main.encuesta') }}">Encuesta</a>
         </nav>
     </header>
-    <main>
-        <!-- El endpoint 'submit_encuesta' no existe, así que el form no debe tener action o debe apuntar a '#' -->
+    <div class="main-content">
         <form method="post" class="encuesta-form">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
@@ -28,13 +25,13 @@
             <label for="opinion">¿Qué opinas de nuestro sitio?</label>
             <textarea id="opinion" name="opinion" rows="4" required></textarea>
 
-            <button type="submit">Enviar</button>
+            <button type="submit" class="btn">Enviar</button>
         </form>
         <p>{{ contenido }}</p>
         <p>Si tienes alguna pregunta, no dudes en contactarnos.</p>
-    </main>
+    </div>
     <footer>
-        <p>&copy; 2025 Mi app web</p>
+        &copy; 2025 Mi App Flask. Todos los derechos reservados.
     </footer>
 </body>
 </html>
