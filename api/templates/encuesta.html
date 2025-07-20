@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Encuesta</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <header>
         <h1>Encuesta</h1>
         <nav>
             <ul>
-                <li><a href="{{ url_for('index') }}">Inicio</a></li>
-                <li><a href="{{ url_for('about') }}">Acerca de</a></li>
-                <li><a href="{{ url_for('encuesta') }}">Encuesta</a></li>
+                <li><a href="{{ url_for('main.index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('main.about') }}">Acerca de</a></li>
+                <li><a href="{{ url_for('main.encuesta') }}">Encuesta</a></li>
             </ul>
         </nav>
     </header>
