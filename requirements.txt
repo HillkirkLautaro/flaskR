@@ -5,3 +5,4 @@ gunicorn==23.0.0
 supabase
 flask-wtf
 wtforms
+email_validator
