@@ -8,10 +8,14 @@ def create_app():
     template_dir = os.path.join(current_dir, 'templates')
     static_dir = os.path.join(current_dir, 'static')
 
+
     # Crear la aplicación Flask
     app = Flask(__name__, 
                template_folder=template_dir,
                static_folder=static_dir)
+
+    # Configuración de clave secreta para CSRF y sesiones
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'clave-muy-secreta-y-unica')
 
     # Registrar blueprints
     from .routes import main_bp
