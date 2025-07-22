@@ -31,6 +31,18 @@ class UserCreationForm(FlaskForm):
     email = StringField('Correo electrónico', validators=[DataRequired(), Email(), Length(max=100)])
     password = PasswordField('Contraseña', validators=[DataRequired(), Length(min=8, max=128)])
 
+def verificar_recaptcha(token):
+    secret_key = os.getenv("RECAPTCHA_SECRET_KEY")
+    respuesta = requests.post(
+        "https://www.google.com/recaptcha/api/siteverify",
+        data={
+            "secret": secret_key,
+            "response": token
+        }
+    )
+    resultado = respuesta.json()
+    return resultado.get("success", False), resultado
+
 def is_valid_email(email):
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
 
@@ -71,33 +83,40 @@ def user_creation():
     form = UserCreationForm()
     mensaje = ""
     if form.validate_on_submit():
-        username = form.username.data.strip()
-        email = form.email.data.lower().strip()
-        password = form.password.data
+        recaptcha_token = request.form.get("recaptcha_token")
+        valido, resultado = verificar_recaptcha(recaptcha_token)
 
-        # Validación extra: solo caracteres permitidos en username
-        if not re.match(r'^[a-zA-Z0-9_.-]+$', username):
-            mensaje = "El usuario solo puede contener letras, números y ._-"
+        if not valido:
+            mensaje = "Fallo la verificación reCAPTCHA. ¿Sos un bot?"
         else:
-            # Verificar si el usuario o email ya existen
-            existing = supabase.table('users').select('*').or_(
-                f"email.eq.{email},username.eq.{username}"
-            ).execute()
-            if existing.data and len(existing.data) > 0:
-                mensaje = "El usuario o correo ya existe."
+            username = form.username.data.strip()
+            email = form.email.data.lower().strip()
+            password = form.password.data
+
+            if not re.match(r'^[a-zA-Z0-9_.-]+$', username):
+                mensaje = "El usuario solo puede contener letras, números y ._-"
             else:
-                try:
-                    password_hash = generate_password_hash(password)
-                    supabase.table('users').insert({
-                        'username': username,
-                        'email': email,
-                        'password_hash': password_hash,
-                        'created_at': datetime.now().isoformat(),
-                        'is_active': True
-                    }).execute()
-                    mensaje = f"¡Usuario {username} creado exitosamente!"
-                except Exception:
-                    mensaje = "Hubo un error al crear el usuario. Intenta nuevamente."
+                existing = supabase.table('users').select('*').or_(
+                    f"email.eq.{email},username.eq.{username}"
+                ).execute()
+
+                if existing.data and len(existing.data) > 0:
+                    mensaje = "El usuario o correo ya existe."
+                else:
+                    try:
+                        password_hash = generate_password_hash(password)
+                        supabase.table('users').insert({
+                            'username': username,
+                            'email': email,
+                            'password_hash': password_hash,
+                            'created_at': datetime.now().isoformat(),
+                            'is_active': True
+                        }).execute()
+                        mensaje = f"¡Usuario {username} creado exitosamente!"
+                    except Exception:
+                        mensaje = "Hubo un error al crear el usuario. Intenta nuevamente."
     elif request.method == 'POST':
         mensaje = "Por favor, revisa los datos ingresados."
-    return render_template('user_creation.html', titulo='Registro de Usuario', mensaje=mensaje, form=form)
+    
+    site_key = os.getenv("RECAPTCHA_SITE_KEY")  # Pasar al HTML
+    return render_template('user_creation.html', titulo='Registro de Usuario', mensaje=mensaje, form=form, site_key=site_key)

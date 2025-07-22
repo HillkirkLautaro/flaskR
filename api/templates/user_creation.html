@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <title>Registro de Usuario</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <script src="https://www.google.com/recaptcha/api.js?render=TU_SITE_KEY"></script>
-    <script>
-      grecaptcha.ready(function() {
-        grecaptcha.execute('TU_SITE_KEY', {action: 'user_creation'}).then(function(token) {
-          document.getElementById('recaptcha_token').value = token;
-        });
-      });
-    </script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ site_key }}"></script>
+<script>
+  grecaptcha.ready(function() {
+    grecaptcha.execute('{{ site_key }}', {action: 'user_creation'}).then(function(token) {
+      document.getElementById('recaptcha_token').value = token;
+    });
+  });
+</script>
+
 </head>
 <body>
     <header>
