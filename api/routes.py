@@ -1,4 +1,7 @@
 from dotenv import load_dotenv
+import requests
+import os
+# Cargar las variables de entorno desde el archivo .env
 load_dotenv()
 
 from flask import Blueprint, render_template, abort, request, flash
