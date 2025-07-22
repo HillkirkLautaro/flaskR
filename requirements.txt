@@ -6,3 +6,5 @@ supabase
 flask-wtf
 wtforms
 email_validator
+requests
+flask-cors
