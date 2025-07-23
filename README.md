@@ -20,7 +20,9 @@ Este proyecto es una aplicación web construida con Flask y Jinja2, que permite 
 - Almacenamiento de respuestas en Supabase.
 - Despliegue en Vercel.
 
-## Estructura del proyecto
+## Estructura del proyecto (desactualizado)
+
+
 ```
 flaskR/
 ├── api/
