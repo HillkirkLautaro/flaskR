@@ -36,15 +36,25 @@ class UserCreationForm(FlaskForm):
 
 def verificar_recaptcha(token):
     secret_key = os.getenv("RECAPTCHA_SECRET_KEY")
-    respuesta = requests.post(
-        "https://www.google.com/recaptcha/api/siteverify",
-        data={
-            "secret": secret_key,
-            "response": token
-        }
-    )
-    resultado = respuesta.json()
-    return resultado.get("success", False), resultado
+    try:
+        respuesta = requests.post(
+            "https://www.google.com/recaptcha/api/siteverify",
+            data={
+                "secret": secret_key,
+                "response": token
+            },
+            timeout=5
+        )
+        respuesta.raise_for_status()
+        resultado = respuesta.json()
+        return resultado.get("success", False), resultado
+    except requests.RequestException as e:
+        # Loguea el error si lo deseas
+        print(f"Error en la verificación reCAPTCHA: {e}")
+        return False, {"error": str(e)}
+    except Exception as e:
+        print(f"Error inesperado en reCAPTCHA: {e}")
+        return False, {"error": str(e)}
 
 def is_valid_email(email):
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
