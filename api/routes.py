@@ -1,12 +1,19 @@
+from dotenv import load_dotenv
+import requests
+import os
+# Cargar las variables de entorno desde el archivo .env
+load_dotenv()
+
 from flask import Blueprint, render_template, abort, request, flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField
+from wtforms import StringField, TextAreaField, PasswordField
 from wtforms.validators import DataRequired, Email, Length
 from supabase import create_client, Client
 import os
 from datetime import datetime
 import re
 import secrets
+from werkzeug.security import generate_password_hash
 
 # Crear el blueprint con el prefijo de ruta
 main_bp = Blueprint('main', __name__)
@@ -21,6 +28,23 @@ class EncuestaForm(FlaskForm):
     nombre = StringField('Nombre', validators=[DataRequired(), Length(max=100)])
     email = StringField('Correo electrónico', validators=[DataRequired(), Email(), Length(max=100)])
     opinion = TextAreaField('Opinión', validators=[DataRequired(), Length(max=1000)])
+
+class UserCreationForm(FlaskForm):
+    username = StringField('Usuario', validators=[DataRequired(), Length(min=4, max=32)])
+    email = StringField('Correo electrónico', validators=[DataRequired(), Email(), Length(max=100)])
+    password = PasswordField('Contraseña', validators=[DataRequired(), Length(min=8, max=128)])
+
+def verificar_recaptcha(token):
+    secret_key = os.getenv("RECAPTCHA_SECRET_KEY")
+    respuesta = requests.post(
+        "https://www.google.com/recaptcha/api/siteverify",
+        data={
+            "secret": secret_key,
+            "response": token
+        }
+    )
+    resultado = respuesta.json()
+    return resultado.get("success", False), resultado
 
 def is_valid_email(email):
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)
@@ -56,3 +80,46 @@ def encuesta():
     elif request.method == 'POST':
         mensaje = "Por favor, revisa los datos ingresados."
     return render_template('encuesta.html', titulo='Encuesta', contenido=mensaje, form=form)
+
+@main_bp.route('/user_creation', methods=['GET', 'POST'])
+def user_creation():
+    form = UserCreationForm()
+    mensaje = ""
+    if form.validate_on_submit():
+        recaptcha_token = request.form.get("recaptcha_token")
+        valido, resultado = verificar_recaptcha(recaptcha_token)
+
+        if not valido:
+            mensaje = "Fallo la verificación reCAPTCHA. ¿Sos un bot?"
+        else:
+            username = form.username.data.strip()
+            email = form.email.data.lower().strip()
+            password = form.password.data
+
+            if not re.match(r'^[a-zA-Z0-9_.-]+$', username):
+                mensaje = "El usuario solo puede contener letras, números y ._-"
+            else:
+                existing = supabase.table('users').select('*').or_(
+                    f"email.eq.{email},username.eq.{username}"
+                ).execute()
+
+                if existing.data and len(existing.data) > 0:
+                    mensaje = "El usuario o correo ya existe."
+                else:
+                    try:
+                        password_hash = generate_password_hash(password)
+                        supabase.table('users').insert({
+                            'username': username,
+                            'email': email,
+                            'password_hash': password_hash,
+                            'created_at': datetime.now().isoformat(),
+                            'is_active': True
+                        }).execute()
+                        mensaje = f"¡Usuario {username} creado exitosamente!"
+                    except Exception:
+                        mensaje = "Hubo un error al crear el usuario. Intenta nuevamente."
+    elif request.method == 'POST':
+        mensaje = "Por favor, revisa los datos ingresados."
+    
+    site_key = os.getenv("RECAPTCHA_SITE_KEY")  # Pasar al HTML
+    return render_template('user_creation.html', titulo='Registro de Usuario', mensaje=mensaje, form=form, site_key=site_key)
