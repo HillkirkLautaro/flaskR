@@ -14,6 +14,8 @@ from datetime import datetime
 import re
 import secrets
 from werkzeug.security import generate_password_hash
+from datetime import datetime, timedelta
+from flask import request
 
 # Crear el blueprint con el prefijo de ruta
 main_bp = Blueprint('main', __name__)
@@ -62,25 +64,55 @@ def about():
 def encuesta():
     form = EncuestaForm()
     mensaje = ""
+
     if form.validate_on_submit():
-        nombre = form.nombre.data
-        email = form.email.data
-        opinion = form.opinion.data
-        fecha = datetime.now().isoformat()
+        ip_address = request.headers.get('X-Forwarded-For', request.remote_addr)
+        if ip_address:
+            ip_address = ip_address.split(',')[0].strip()
+        else:
+            ip_address = '0.0.0.0'  # fallback
+
+        # Obtener la fecha y hora actual
+        from datetime import datetime, timedelta    
+        ahora = datetime.now()
+        hace_una_hora = ahora - timedelta(hours=1)
+
+        # Buscar envíos recientes de esta IP en la última hora
         try:
-            supabase.table('encuestas').insert({
-                'name': nombre,
-                'email': email,
-                'opinion': opinion,
-                'date_time': fecha
-            }).execute()
-            mensaje = f"¡Gracias por tu opinión, {nombre}!"
-        except Exception:
-            mensaje = "Hubo un error al guardar tu opinión. Intenta nuevamente."
+            respuesta = supabase.table('encuestas').select('date_time').eq('ip_address', ip_address).execute()
+            envios_recientes = [
+                r['date_time'] for r in respuesta.data
+                if datetime.fromisoformat(r['date_time']) > hace_una_hora
+            ]
+        except Exception as e:
+            envios_recientes = []
+            print("Error al consultar Supabase:", e)
+
+        if len(envios_recientes) >= 2:
+            mensaje = "Has alcanzado el límite de envíos desde tu IP. Por favor, intentá más tarde."
+        else:
+            nombre = form.nombre.data
+            email = form.email.data
+            opinion = form.opinion.data
+            fecha = ahora.isoformat()
+
+            try:
+                supabase.table('encuestas').insert({
+                    'name': nombre,
+                    'email': email,
+                    'opinion': opinion,
+                    'date_time': fecha,
+                    'ip_address': ip_address
+                }).execute()
+                mensaje = f"¡Gracias por tu opinión, {nombre}!"
+            except Exception as e:
+                print("Error al insertar encuesta:", e)
+                mensaje = "Hubo un error al guardar tu opinión. Intenta nuevamente."
+
     elif request.method == 'POST':
         mensaje = "Por favor, revisa los datos ingresados."
-    return render_template('encuesta.html', titulo='Encuesta', contenido=mensaje, form=form)
 
+    return render_template('encuesta.html', titulo='Encuesta', contenido=mensaje, form=form)
 @main_bp.route('/user_creation', methods=['GET', 'POST'])
 def user_creation():
     form = UserCreationForm()

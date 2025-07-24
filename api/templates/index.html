@@ -1,27 +1,23 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Mi App con Flask y Jinja2</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-</head>
-<body>
-  <header>
-    <h1>Hola, {{ nombre }}!</h1>
-    <nav>
-      <a href="{{ url_for('main.index') }}">Inicio</a>
-      <a href="{{ url_for('main.about') }}">About</a>
-      <a href="{{ url_for('main.encuesta') }}">Encuesta</a>
-    </nav>
-  </header>
-  <div class="main-content">
-    <p>Esta es una página renderizada con Jinja2 en Flask.</p>
-    <p>La fecha actual es: {{ fecha_actual }}</p>
-    <p>Pero si apretas el botón, te llevará a la página de "about".</p>
-    <a href="{{ url_for('main.about') }}" class="btn"><button>Click me</button></a>
-  </div>
-  <footer>
-    &copy; 2025 Mi App Flask.
-  </footer>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Inicio — Flaskr{% endblock %}
+
+{% block content %}
+  <main class="container">
+    <section class="welcome-section">
+      <h1>Bienvenido a Flaskr</h1>
+      <p>Tu app web ligera y moderna, creada con Flask, Supabase y desplegada en Vercel.</p>
+      <p>Explorá nuestras funcionalidades:</p>
+      <ul class="features-list">
+        <li>Encuestas para conocer tu opinión</li>
+        <li>Registro seguro de usuarios</li>
+        <li>Open source y creada por latinoamericanos</li>
+      </ul>
+      <div class="btn-group" style="padding: 2rem 0;">
+        <a href="{{ url_for('main.encuesta') }}" class="btn">Dejar opinión</a>
+        <a href="{{ url_for('main.user_creation') }}" class="btn btn-outline">Crear cuenta</a>
+        <a href="{{ url_for('main.about') }}" class="btn btn-secondary">Acerca de</a>
+      </div>
+    </section>
+  </main>
+{% endblock %}
