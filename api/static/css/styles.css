@@ -116,14 +116,13 @@ button:hover, .btn:hover {
     color: #232526;
 }
 
-<<<<<<< Updated upstream
 footer {
     text-align: center;
     padding: 1rem 0;
     color: #888;
     font-size: 0.9rem;
 }
-=======
+
 .btn:hover,
 .btn:focus {
   background-color: #1e40af;
@@ -185,5 +184,3 @@ footer {
 .btn-secondary:hover {
   background-color: #4b5563;
 }
-
->>>>>>> Stashed changes
