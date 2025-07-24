@@ -111,24 +111,3 @@ body {
   width: 100%;
   transition: background-color 0.3s ease;
 }
-
-.btn:hover,
-.btn:focus {
-  background-color: #1e40af;
-  outline: none;
-}
-
-/* Mensaje general del form */
-.form-message {
-  margin-top: 1rem;
-  font-weight: 600;
-  color: #16a34a; /* verde */
-  text-align: center;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  .user-form {
-    padding: 1.2rem;
-  }
-}
