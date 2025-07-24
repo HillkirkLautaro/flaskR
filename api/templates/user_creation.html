@@ -29,7 +29,7 @@
             {% if form.password.errors %}
                 <div class="error">{{ form.password.errors[0] }}</div>
             {% endif %}
-            <input type="hidden" id="recaptcha_token" name="recaptcha_token">
+            <input type="hidden" id="RECAPTCHA_SECRET_KEY" name="RECAPTCHA_SECRET_KEY">
             <button type="submit" class="btn">Registrar</button>
         </form>
         <p>{{ mensaje }}</p>
