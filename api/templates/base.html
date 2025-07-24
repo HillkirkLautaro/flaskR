@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Flaskr{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1><a href="{{ url_for('main.index') }}">Flaskr</a></h1>
+      <nav>
+        <ul class="nav-list">
+          <li><a href="{{ url_for('main.index') }}">Inicio</a></li>
+          <li><a href="{{ url_for('main.about') }}">Sobre</a></li>
+          <li><a href="{{ url_for('main.encuesta') }}">Encuesta</a></li>
+          <li><a href="{{ url_for('main.user_creation') }}">Registrarse</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for message in messages %}
+            <div class="flash">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Flaskr — Hecho con Flask, Supabase y ❤️ desde LatAm.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Registro de Usuario</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <script src="https://www.google.com/recaptcha/api.js?render={{ site_key }}"></script>
+{% extends "base.html" %}
+
+{% block title %}Inicio — Flaskr{% endblock %}
+
+{% block content %}
+
 <script>
   grecaptcha.ready(function() {
     grecaptcha.execute('{{ site_key }}', {action: 'user_creation'}).then(function(token) {
@@ -12,23 +11,16 @@
     });
   });
 </script>
-
-</head>
-<body>
-    <header>
-        <h1>Crear Usuario</h1>
-        <nav>
-            <a href="{{ url_for('main.index') }}">Inicio</a>
-            <a href="{{ url_for('main.about') }}">About</a>
-        </nav>
-    </header>
-    <div class="main-content">
-        <form method="post" class="user-form">
-            {{ form.csrf_token }}
+<div class="main-content">
+    <form method="post" class="user-form">
+        {{ form.csrf_token }}
+        <div>
             {{ form.username.label }} {{ form.username }}
             {% if form.username.errors %}
                 <div class="error">{{ form.username.errors[0] }}</div>
             {% endif %}
+        </div>
+        <div>
             {{ form.email.label }} {{ form.email }}
             {% if form.email.errors %}
                 <div class="error">{{ form.email.errors[0] }}</div>
@@ -42,8 +34,6 @@
         </form>
         <p>{{ mensaje }}</p>
     </div>
-    <footer>
-        &copy; 2025 Mi App Flask. Todos los derechos reservados.
-    </footer>
-</body>
-</html>
+    <p>{{ mensaje }}</p>
+</div>
+{% endblock %}
