@@ -116,9 +116,74 @@ button:hover, .btn:hover {
     color: #232526;
 }
 
+<<<<<<< Updated upstream
 footer {
     text-align: center;
     padding: 1rem 0;
     color: #888;
     font-size: 0.9rem;
 }
+=======
+.btn:hover,
+.btn:focus {
+  background-color: #1e40af;
+  outline: none;
+}
+
+/* Mensaje general del form */
+.form-message {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: #16a34a; /* verde */
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .user-form {
+    padding: 1.2rem;
+  }
+}
+
+.welcome-section {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.features-list {
+  list-style: inside disc;
+  margin: 1rem 0 2rem 0;
+  font-size: 1.1rem;
+  color: #374151; /* gris oscuro */
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #2563eb;
+  color: #2563eb;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: #2563eb;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #6b7280;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #4b5563;
+}
+
+>>>>>>> Stashed changes
