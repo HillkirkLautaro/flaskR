@@ -5,8 +5,8 @@ Microblog ligero y open-source hecho en **Flask**, con Tablas en **Supabase**, d
 ![Demo en Vercel](https://flaskr-topaz.vercel.app/)
 
 ## 🧭 TL;DR
-- **Demo**: https://flaskr-topaz.vercel.app/ :contentReference[oaicite:1]{index=1}  
-- **Código fuente**: [GitHub (por subir en el futuro…)]
+- **Demo**: https://flaskr-topaz.vercel.app/ 
+- **Código fuente**: [GitHub](https://github.com/HillkirkLautaro/flaskR)
 
 ---
 
@@ -25,4 +25,4 @@ Microblog ligero y open-source hecho en **Flask**, con Tablas en **Supabase**, d
 - **Backend**: Python + Flask + Flask-WTF  
 - **Base de datos**: Supabase (PostgreSQL)  
 - **Despliegue**: Vercel (serverless functions)  
-- **Frontend**: Plantillas Jinja2 + CSS minimalista (estilo Ant‑Design‑inspirado opcional)
+- **Frontend**: Plantillas Jinja2 + CSS minimalista
