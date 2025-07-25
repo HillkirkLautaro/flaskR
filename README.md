@@ -1,6 +1,6 @@
 # ☁️ Flaskr
 
-Microblog ligero y open-source hecho en **Flask**, con backend en **Supabase**, desplegado en **Vercel**. Creado por un desarrollador de Latinoamérica.
+Microblog ligero y open-source hecho en **Flask**, con Tablas en **Supabase**, desplegado en **Vercel**. Creado por un desarrollador de Latinoamérica.
 
 ![Demo en Vercel](https://flaskr-topaz.vercel.app/)
 
