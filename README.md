@@ -2,9 +2,7 @@
 
 Microblog ligero y open-source hecho en **Flask**, con Tablas en **Supabase**, desplegado en **Vercel**. Creado por un desarrollador de Latinoamérica.
 
-![Demo en Vercel](https://flaskr-topaz.vercel.app/)
-
-## 🧭 TL;DR
+![Vercel](https://flaskr-topaz.vercel.app/)
 - **Demo**: https://flaskr-topaz.vercel.app/ 
 - **Código fuente**: [GitHub](https://github.com/HillkirkLautaro/flaskR)
 
