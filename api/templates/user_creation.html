@@ -15,23 +15,23 @@
     <form method="post" class="user-form">
         {{ form.csrf_token }}
         <div class="form-group">
-            {{ form.username.label }} {{ form.username }}
+            {{ form.username.label(class="form-label") }} {{ form.username(class="form-input", placeholder="Username") }}
             {% if form.username.errors %}
                 <div class="error">{{ form.username.errors[0] }}</div>
             {% endif %}
         </div>
         <div class="form-group">
             {{ form.recaptcha_token }}
-            {{ form.email.label }} {{ form.email }}
+            {{ form.email.label(class="form-label") }} {{ form.email(class="form-input", placeholder="tu@email.com") }}
             {% if form.email.errors %}
                 <div class="error">{{ form.email.errors[0] }}</div>
             {% endif %}
-            {{ form.password.label }} {{ form.password }}
+            {{ form.password.label(class="form-label") }} {{ form.password(class="form-input", placeholder="Contraseña") }}
             {% if form.password.errors %}
                 <div class="error">{{ form.password.errors[0] }}</div>
             {% endif %}
             <input type="hidden" id="RECAPTCHA_SECRET_KEY" name="RECAPTCHA_SECRET_KEY">
-            <button type="submit" class="btn">Registrar</button>
+            <button type="submit" class="btn" style="margin-top: 20px;">Registrar</button>
     </form>
         <p>{{ mensaje }}</p>
         </div>
