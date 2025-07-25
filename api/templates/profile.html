@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Perfil de Usuario — Flaskr{% endblock %}
+
+{% block content %}
+<div class="profile">
+  <h2>Perfil de {{ user.username }}</h2>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+
+  {% if user.bio %}
+    <p><strong>Biografía:</strong> {{ user.bio }}</p>
+  {% else %}
+    <p><em>Sin biografía aún.</em></p>
+  {% endif %}
+</div>
+{% endblock %}
