@@ -14,13 +14,14 @@
 <div class="main-content">
     <form method="post" class="user-form">
         {{ form.csrf_token }}
-        <div>
+        <div class="form-group">
             {{ form.username.label }} {{ form.username }}
             {% if form.username.errors %}
                 <div class="error">{{ form.username.errors[0] }}</div>
             {% endif %}
         </div>
-        <div>
+        <div class="form-group">
+            {{ form.recaptcha_token }}
             {{ form.email.label }} {{ form.email }}
             {% if form.email.errors %}
                 <div class="error">{{ form.email.errors[0] }}</div>
@@ -31,9 +32,8 @@
             {% endif %}
             <input type="hidden" id="RECAPTCHA_SECRET_KEY" name="RECAPTCHA_SECRET_KEY">
             <button type="submit" class="btn">Registrar</button>
-        </form>
+    </form>
         <p>{{ mensaje }}</p>
-    </div>
-    <p>{{ mensaje }}</p>
+        </div>
 </div>
 {% endblock %}
