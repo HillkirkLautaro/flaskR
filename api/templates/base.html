@@ -15,8 +15,8 @@
         <ul class="nav-list">
           <li><a href="{{ url_for('main.index') }}">Inicio</a></li>
           <li><a href="{{ url_for('main.about') }}">Sobre</a></li>
-          <li><a href="{{ url_for('main.encuesta') }}">Encuesta</a></li>
-          <li><a href="{{ url_for('main.user_creation') }}">Registrarse</a></li>
+          <li><a href="{{ url_for('encuesta.encuesta') }}">Encuesta</a></li>
+          <li><a href="{{ url_for('auth.user_creation') }}">Registrarse</a></li>
         </ul>
       </nav>
     </div>
@@ -37,7 +37,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; 2025 Flaskr — Hecho con Flask, Supabase y ❤️ desde LatAm.</p>
+      <p>&copy; 2025 Flaskr — Hecho con Flask, Supabase y Vercel</p>
     </div>
   </footer>
 </body>
