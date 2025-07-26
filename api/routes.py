@@ -165,3 +165,8 @@ def user_creation():
     
     site_key = os.getenv("RECAPTCHA_SITE_KEY")  # Pasar al HTML
     return render_template('user_creation.html', titulo='Registro de Usuario', mensaje=mensaje, form=form, site_key=site_key)
+@main_bp.route('/profile')
+def profile():
+    # Aquí podrías implementar la lógica para mostrar el perfil del usuario
+    # Por ahora, simplemente redirigimos a la página de inicio
+    return render_template('profile.html', titulo='Perfil de Usuario', contenido="Esta es la página de perfil del usuario.")
