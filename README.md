@@ -1,4 +1,4 @@
-# ☁️ Flaskr
+# ☁️ Flaskr (PROYECTO DESCONTINUADO)
 
 Microblog ligero y open-source hecho en **Flask**, con Tablas en **Supabase**, desplegado en **Vercel**.
 
