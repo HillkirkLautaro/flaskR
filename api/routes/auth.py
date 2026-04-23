@@ -93,7 +93,7 @@ def user_creation():
         print("RECAPTCHA RESULT:", resultado)
 
         if not valido:
-            mensaje = "Fallo la verificación reCAPTCHA. ¿Sos un bot?"
+            mensaje = f"Error reCAPTCHA: {resultado}"
         else:
             username = form.username.data.strip()
             email = form.email.data.lower().strip()
@@ -150,6 +150,7 @@ def user_creation():
         form=form,
         site_key=site_key
     )
+
 
 
 @auth_bp.route('/profile')
