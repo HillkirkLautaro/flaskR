@@ -1,39 +1,69 @@
 {% extends "base.html" %}
 
-{% block title %}Inicio — Flaskr{% endblock %}
+{% block title %}Registro de Usuario{% endblock %}
 
 {% block content %}
 
-<script>
-  grecaptcha.ready(function() {
-    grecaptcha.execute('{{ site_key }}', {action: 'user_creation'}).then(function(token) {
-      document.getElementById('recaptcha_token').value = token;
-    });
-  });
-</script>
+<!-- reCAPTCHA v3 -->
+
+<script src="https://www.google.com/recaptcha/api.js?render={{ site_key }}"></script>
+
 <div class="main-content">
-    <form method="post" class="user-form">
-        {{ form.csrf_token }}
-        <div class="form-group">
-            {{ form.username.label(class="form-label") }} {{ form.username(class="form-input", placeholder="Username") }}
-            {% if form.username.errors %}
-                <div class="error">{{ form.username.errors[0] }}</div>
-            {% endif %}
-        </div>
-        <div class="form-group">
-            {{ form.recaptcha_token }}
-            {{ form.email.label(class="form-label") }} {{ form.email(class="form-input", placeholder="tu@email.com") }}
-            {% if form.email.errors %}
-                <div class="error">{{ form.email.errors[0] }}</div>
-            {% endif %}
-            {{ form.password.label(class="form-label") }} {{ form.password(class="form-input", placeholder="Contraseña") }}
-            {% if form.password.errors %}
-                <div class="error">{{ form.password.errors[0] }}</div>
-            {% endif %}
-            <input type="hidden" id="RECAPTCHA_SECRET_KEY" name="RECAPTCHA_SECRET_KEY">
-            <button type="submit" class="btn" style="margin-top: 20px;">Registrar</button>
-    </form>
-        <p>{{ mensaje }}</p>
-        </div>
+    <h2>Crear cuenta</h2>
+
+```
+<form method="POST" id="userForm" class="user-form">
+    {{ form.csrf_token }}
+
+    <!-- Token reCAPTCHA -->
+    <input type="hidden" name="recaptcha_token" id="recaptcha_token">
+
+    <!-- Usuario -->
+    <div class="form-group">
+        {{ form.username.label(class="form-label") }}
+        {{ form.username(class="form-input", placeholder="Usuario") }}
+        {% if form.username.errors %}
+            <div class="error">{{ form.username.errors[0] }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+        {{ form.email.label(class="form-label") }}
+        {{ form.email(class="form-input", placeholder="correo@ejemplo.com") }}
+        {% if form.email.errors %}
+            <div class="error">{{ form.email.errors[0] }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+        {{ form.password.label(class="form-label") }}
+        {{ form.password(class="form-input", placeholder="Contraseña") }}
+        {% if form.password.errors %}
+            <div class="error">{{ form.password.errors[0] }}</div>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn">Registrarse</button>
+</form>
+
+{% if mensaje %}
+    <p class="mensaje">{{ mensaje }}</p>
+{% endif %}
+```
+
 </div>
+
+<script src="https://www.google.com/recaptcha/enterprise.js?render=6LfBCIkrAAAAAA_vSHzN5L0wnAIPDw4FG_MU_lFq">
+    function onClick(e) {
+    e.preventDefault();
+    grecaptcha.enterprise.ready(async () => {
+      const token = await grecaptcha.enterprise.execute('6LfBCIkrAAAAAA_vSHzN5L0wnAIPDw4FG_MU_lFq', {action: 'LOGIN'});
+    });
+  }
+</script>
+
+<input type="hidden" name="recaptcha_token" id="recaptcha_token">
+
 {% endblock %}

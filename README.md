@@ -54,6 +54,8 @@ CREATE TABLE public.encuestas (
 CREATE INDEX idx_encuestas_ip_address ON public.encuestas (ip_address);
 CREATE INDEX idx_encuestas_date_time ON public.encuestas (date_time);"
 
+Ejecutar main.py para correr la pagina.
+
 ---
 
 # Mejoras..
