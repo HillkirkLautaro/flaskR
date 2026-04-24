@@ -25,7 +25,6 @@ def create_app():
     for bp in all_blueprints:
         app.register_blueprint(bp)
 
-    # Podés pasar supabase como global o adjuntarlo al app
     app.supabase = supabase
 
     return app
