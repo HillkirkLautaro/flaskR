@@ -15,6 +15,9 @@ auth_bp = Blueprint('auth', __name__)
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID")
+RECAPTCHA_SITE_KEY = os.getenv("RECAPTCHA_SITE_KEY")  
+
 
 
 # ========================
