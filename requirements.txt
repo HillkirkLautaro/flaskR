@@ -1,7 +1,0 @@
-Flask
-python-dotenv
-supabase
-flask-wtf
-email_validator
-google-cloud-recaptcha-enterprise
-
