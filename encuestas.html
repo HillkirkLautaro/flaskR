@@ -63,8 +63,8 @@
     <footer>
         <p>Creado por Lautaro Hillkirk</p>
     </footer>
-    <script>
-const supabaseKey = "sb_publishable_ut3DRPMELPw-6nCvxSbMjA_Cttmj4FA";
+<script>
+const supabaseKey = "sb_publishable_xxx";
 const supabaseUrl = "https://ftbyjjmvflxlotnkauwd.supabase.co";
 
 const client = window.supabase.createClient(
@@ -72,22 +72,37 @@ const client = window.supabase.createClient(
     supabaseKey
 );
 
+// anti spam
+let lastSubmit = 0;
+
+function sanitize(input) {
+    return input.replace(/</g, "&lt;").replace(/>/g, "&gt;").trim();
+}
+
 const form = document.getElementById("encuestaForm");
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    console.log("Formulario interceptado");
+    if (Date.now() - lastSubmit < 5000) {
+        alert("Espera 5 segundos antes de enviar otra encuesta");
+        return;
+    }
+    lastSubmit = Date.now();
 
-    const pregunta = document.getElementById("Pregunta").value.trim();
-    const opcion1 = document.getElementById("Opcion1").value.trim();
-    const opcion2 = document.getElementById("Opcion2").value.trim();
+    const pregunta = sanitize(document.getElementById("Pregunta").value);
+    const opcion1 = sanitize(document.getElementById("Opcion1").value);
+    const opcion2 = sanitize(document.getElementById("Opcion2").value);
 
-    console.log({
-        pregunta,
-        opcion1,
-        opcion2
-    });
+    if (pregunta.length < 5) {
+        alert("Pregunta muy corta");
+        return;
+    }
+
+    if (opcion1 === opcion2) {
+        alert("Opciones iguales no válidas");
+        return;
+    }
 
     const { error } = await client
         .from("Encuesta")
