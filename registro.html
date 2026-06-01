@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Flaskr</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <header>
+        <h1>Flaskr</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="registro.html">Registro</a></li>
+                <li><a href="encuestas.html">Encuestas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Registro de usuario</h2>
+
+        <div class="lista-encuestas">
+            <form id="registroForm">
+
+                <label for="username">Usuario:</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Nombre de usuario"
+                    maxlength="30"
+                    required
+                >
+
+                <label for="email">Email:</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Correo electrónico"
+                    maxlength="80"
+                    required
+                >
+
+                <label for="password">Contraseña:</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Contraseña"
+                    minlength="6"
+                    required
+                >
+
+                <label for="confirmPassword">Confirmar contraseña:</label>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Repetir contraseña"
+                    minlength="6"
+                    required
+                >
+
+                <button type="submit">Registrarse</button>
+            </form>
+        </div>
+
+        <p>El registro guarda usuarios en Supabase (tabla users).</p>
+    </main>
+
+    <footer>
+        <p>Creado por Lautaro Hillkirk</p>
+    </footer>
+
+<script>
+const supabaseKey = "sb_publishable_ut3DRPMELPw-6nCvxSbMjA_Cttmj4FA";
+const supabaseUrl = "https://ftbyjjmvflxlotnkauwd.supabase.co";
+
+const client = window.supabase.createClient(
+    supabaseUrl,
+    supabaseKey
+);
+
+// anti spam
+let lastSubmit = 0;
+
+function sanitize(input) {
+    return input.replace(/</g, "&lt;").replace(/>/g, "&gt;").trim();
+}
+
+const form = document.getElementById("registroForm");
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (Date.now() - lastSubmit < 5000) {
+        alert("Espera 5 segundos antes de volver a registrarte");
+        return;
+    }
+    lastSubmit = Date.now();
+
+    const username = sanitize(document.getElementById("username").value);
+    const email = sanitize(document.getElementById("email").value);
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if (username.length < 3) {
+        alert("El usuario es muy corto");
+        return;
+    }
+
+    if (!email.includes("@")) {
+        alert("Email inválido");
+        return;
+    }
+
+    if (password.length < 6) {
+        alert("Contraseña muy corta");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert("Las contraseñas no coinciden");
+        return;
+    }
+
+    const { error } = await client
+        .from("users")
+        .insert([
+            {
+                username: username,
+                email: email,
+                password: password
+            }
+        ]);
+
+    if (error) {
+        console.error(error);
+        alert(error.message);
+        return;
+    }
+
+    alert("Usuario registrado correctamente");
+    form.reset();
+});
+</script>
+
+</body>
+</html>
