@@ -83,13 +83,19 @@ form.addEventListener("submit", async (e) => {
     const opcion1 = document.getElementById("Opcion1").value.trim();
     const opcion2 = document.getElementById("Opcion2").value.trim();
 
+    console.log({
+        pregunta,
+        opcion1,
+        opcion2
+    });
+
     const { error } = await client
         .from("Encuesta")
         .insert([
             {
-                Pregunta,
-                Opcion1,
-                Opcion2
+                Pregunta: pregunta,
+                Opcion1: opcion1,
+                Opcion2: opcion2
             }
         ]);
 
