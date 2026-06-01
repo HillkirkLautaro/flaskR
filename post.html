@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil - Flaskr</title>
+    <title>Post - Flaskr</title>
 
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -27,19 +27,33 @@
 </header>
 
 <main>
-    <h2>Mi Perfil</h2>
+
+    <h2>Crear post</h2>
 
     <div class="lista-encuestas">
 
-        <p><strong>Email:</strong> <span id="email">Cargando...</span></p>
-        <p><strong>User ID:</strong> <span id="userid">Cargando...</span></p>
-        <p><strong>Username:</strong> <span id="username">Cargando...</span></p>
+        <form id="postForm">
 
-        <button id="logoutBtn">Cerrar sesión</button>
+            <label>Escribe tu post (máx 50 caracteres):</label>
+
+            <input
+                type="text"
+                id="postText"
+                maxlength="50"
+                placeholder="¿Qué estás pensando?"
+                required
+            >
+
+            <p id="counter">0 / 50</p>
+
+            <button type="submit">Publicar</button>
+
+        </form>
 
     </div>
 
     <p id="status"></p>
+
 </main>
 
 <footer>
@@ -47,8 +61,6 @@
 </footer>
 
 <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-
-<script src="scripts/profile.js"></script>
-
+<script src="scripts/post.js"></script>
 </body>
 </html>

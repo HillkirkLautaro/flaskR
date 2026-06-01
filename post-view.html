@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts - Flaskr</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<header>
+    <h1>Flaskr</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="registro.html">Registro</a></li>
+            <li><a href="encuestas.html">Encuestas</a></li>
+            <li><a href="post.html">Crear Post</a></li>
+            <li><a href="profile.html">Perfil</a></li>
+            <li><a href="post-view.html">Ver Posts</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+    <h2>Feed de Posts</h2>
+
+    <div class="lista-encuestas" id="postsContainer">
+        <p>Cargando posts...</p>
+    </div>
+
+</main>
+
+<footer>
+    <p>Creado por Lautaro Hillkirk</p>
+</footer>
+
+<script>
+const supabaseKey = "sb_publishable_ut3DRPMELPw-6nCvxSbMjA_Cttmj4FA";
+const supabaseUrl = "https://ftbyjjmvflxlotnkauwd.supabase.co";
+
+const client = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+const container = document.getElementById("postsContainer");
+
+function sanitize(text) {
+    return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+async function loadPosts() {
+
+    const { data, error } = await client
+        .from("posts")
+        .select(`
+            id,
+            content,
+            created_at,
+            user_id,
+            username
+        `)
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.error(error);
+        container.innerHTML = "<p>Error cargando posts</p>";
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        container.innerHTML = "<p>No hay posts todavía</p>";
+        return;
+    }
+
+    container.innerHTML = "";
+
+    data.forEach(post => {
+
+        const div = document.createElement("div");
+        div.className = "post-card";
+
+        div.innerHTML = `
+            <p><strong>User:</strong> ${post.username}</p>
+            <p>${sanitize(post.content)}</p>
+            <small>${new Date(post.created_at).toLocaleString()}</small>
+            <hr>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+loadPosts();
+</script>
+
+</body>
+</html>
