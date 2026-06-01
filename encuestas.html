@@ -84,7 +84,7 @@ form.addEventListener("submit", async (e) => {
     const opcion2 = document.getElementById("opcion2").value.trim();
 
     const { error } = await client
-        .from("encuestas")
+        .from("Encuesta")
         .insert([
             {
                 pregunta,
