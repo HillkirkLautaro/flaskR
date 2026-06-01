@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuestas - Flaskr</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Flaskr</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="registro.html">Registro</a></li>
+                <li><a href="encuestas.html">Encuestas</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Encuestas</h2>
+        <div class="lista-encuestas">
+            <form id="encuestaForm">
+                <label for="pregunta">Pregunta:</label>
+                <input
+                    type="text"
+                    id="pregunta"
+                    name="pregunta"
+                    placeholder="Escribe tu pregunta"
+                    maxlength="100"
+                    required
+                >
+
+                <label for="opcion1">Opción 1:</label>
+                <input
+                    type="text"
+                    id="opcion1"
+                    name="opcion1"
+                    placeholder="Primera opción"
+                    maxlength="100"
+                    required
+                >
+
+                <label for="opcion2">Opción 2:</label>
+                <input
+                    type="text"
+                    id="opcion2"
+                    name="opcion2"
+                    placeholder="Segunda opción"
+                    maxlength="100"
+                    required
+                >
+
+                <button type="submit">Crear Encuesta</button>
+            </form>
+        </div>
+        <p>Esta encuesta permite guardar las preguntas y opciones de respuesta en una tabla de supabase, no tiene primary key ni relaciones, por ahora.</p>
+    </main>
+
+    <footer>
+        <p>Creado por Lautaro Hillkirk</p>
+    </footer>
+</body>
+</html>

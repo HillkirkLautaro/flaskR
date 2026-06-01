@@ -80,3 +80,23 @@ main p{
 .botones button:active{
     transform: translateY(0);
 }
+.lista-encuestas form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.lista-encuestas input{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.lista-encuestas button{
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
