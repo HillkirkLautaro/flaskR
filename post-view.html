@@ -55,15 +55,14 @@ function sanitize(text) {
 async function loadPosts() {
 
     const { data, error } = await client
-        .from("posts")
-        .select(`
-            id,
-            content,
-            created_at,
-            user_id,
-            username
-        `)
-        .order("created_at", { ascending: false });
+  .from("posts")
+  .select(`
+      id,
+      content,
+      created_at,
+      profiles(username)
+  `)
+  .order("created_at", { ascending: false });
 
     if (error) {
         console.error(error);
@@ -84,7 +83,7 @@ async function loadPosts() {
         div.className = "post-card";
 
         div.innerHTML = `
-            <p><strong>User:</strong> ${post.username}</p>
+            <p><strong>User:</strong> ${post.profiles?.username}</p>
             <p>${sanitize(post.content)}</p>
             <small>${new Date(post.created_at).toLocaleString()}</small>
             <hr>
