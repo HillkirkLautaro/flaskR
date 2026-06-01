@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encuestas - Flaskr</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <header>
@@ -62,5 +63,43 @@
     <footer>
         <p>Creado por Lautaro Hillkirk</p>
     </footer>
+    <script>
+const supabaseKey = "sb_publishable_ut3DRPMELPw-6nCvxSbMjA_Cttmj4FA";
+const supabaseURL = "https://ftbyjjmvflxlotnkauwd.supabase.co";
+
+const supabase = window.supabase.createClient(
+    supabaseURL,
+    supabaseKey
+);
+
+const form = document.getElementById("encuestaForm");
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const pregunta = document.getElementById("pregunta").value.trim();
+    const opcion1 = document.getElementById("opcion1").value.trim();
+    const opcion2 = document.getElementById("opcion2").value.trim();
+
+    const { error } = await supabase
+        .from("encuestas")
+        .insert([
+            {
+                pregunta,
+                opcion1,
+                opcion2
+            }
+        ]);
+
+    if (error) {
+        console.error(error);
+        alert("Error al guardar la encuesta");
+        return;
+    }
+
+    alert("Encuesta creada correctamente");
+    form.reset();
+});
+</script>
 </body>
 </html>
