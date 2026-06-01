@@ -64,18 +64,11 @@
         <p>Creado por Lautaro Hillkirk</p>
     </footer>
     <script>
-const form1 = document.getElementById("encuestaForm");
-
-form1.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    console.log("Formulario interceptado");
-});
 const supabaseKey = "sb_publishable_ut3DRPMELPw-6nCvxSbMjA_Cttmj4FA";
-const supabaseURL = "https://ftbyjjmvflxlotnkauwd.supabase.co";
+const supabaseUrl = "https://ftbyjjmvflxlotnkauwd.supabase.co";
 
-const supabase = window.supabase.createClient(
-    supabaseURL,
+const client = window.supabase.createClient(
+    supabaseUrl,
     supabaseKey
 );
 
@@ -84,11 +77,13 @@ const form = document.getElementById("encuestaForm");
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    console.log("Formulario interceptado");
+
     const pregunta = document.getElementById("pregunta").value.trim();
     const opcion1 = document.getElementById("opcion1").value.trim();
     const opcion2 = document.getElementById("opcion2").value.trim();
 
-    const { error } = await supabase
+    const { error } = await client
         .from("encuestas")
         .insert([
             {
@@ -100,7 +95,7 @@ form.addEventListener("submit", async (e) => {
 
     if (error) {
         console.error(error);
-        alert("Error al guardar la encuesta");
+        alert(error.message);
         return;
     }
 
