@@ -37,6 +37,11 @@ header nav ul li a:hover{
 main{
     text-align: center;
 }
+.captcha-container {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
 footer{
     background-color: #333;
     color: #fff;
@@ -49,7 +54,6 @@ footer{
 main p{
     font-size: 1.2em;
     margin: 20px;
-    width: 100%;
     border: 1px solid #ccc;
     border-radius: 8px;
 }
@@ -96,7 +100,7 @@ main p{
 
 .lista-encuestas button{
     padding: 10px;
-    border: none;
+    border: 1px solid #ccc;
     border-radius: 5px;
     cursor: pointer;
 }

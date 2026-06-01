@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Flaskr</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<header>
+    <h1>Flaskr</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="registro.html">Registro</a></li>
+            <li><a href="encuestas.html">Encuestas</a></li>
+            <li><a href="profile.html">Perfil</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h2>Mi Perfil</h2>
+
+    <div class="lista-encuestas">
+
+        <p><strong>Email:</strong> <span id="email">Cargando...</span></p>
+        <p><strong>User ID:</strong> <span id="userid">Cargando...</span></p>
+        <p><strong>Username:</strong> <span id="username">Cargando...</span></p>
+
+        <button id="logoutBtn">Cerrar sesión</button>
+
+    </div>
+
+    <p id="status"></p>
+</main>
+
+<footer>
+    <p>Creado por Lautaro Hillkirk</p>
+</footer>
+
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
+<script>
+const supabaseKey = "sb_publishable_ut3DRPMELPw-6nCvxSbMjA_Cttmj4FA";
+const supabaseUrl = "https://ftbyjjmvflxlotnkauwd.supabase.co";
+
+const client = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+const emailEl = document.getElementById("email");
+const userIdEl = document.getElementById("userid");
+const usernameEl = document.getElementById("username");
+const status = document.getElementById("status");
+
+// 🔐 PROTEGER PÁGINA
+async function loadProfile() {
+
+    const { data: { user }, error } = await client.auth.getUser();
+
+    if (error || !user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    emailEl.innerText = user.email;
+    userIdEl.innerText = user.id;
+
+    // traer username desde profiles
+    const { data, error: profileError } = await client
+        .from("profiles")
+        .select("username")
+        .eq("id", user.id)
+        .maybeSingle();
+
+    if (!profileError && data) {
+        usernameEl.innerText = data.username;
+    } else {
+        usernameEl.innerText = "No definido";
+    }
+}
+
+loadProfile();
+
+// 🚪 LOGOUT
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+
+    const { error } = await client.auth.signOut();
+
+    if (error) {
+        status.innerText = "Error al cerrar sesión";
+        return;
+    }
+
+    localStorage.removeItem("session");
+
+    window.location.href = "login.html";
+});
+</script>
+
+</body>
+</html>

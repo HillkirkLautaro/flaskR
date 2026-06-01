@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Flaskr</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<header>
+    <h1>Flaskr</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="registro.html">Registro</a></li>
+            <li><a href="encuestas.html">Encuestas</a></li>
+            <li><a href="profile.html">Perfil</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h2>Login de usuario</h2>
+
+    <div class="lista-encuestas">
+        <form id="loginForm">
+
+            <label>Email:</label>
+            <input type="email" id="email" maxlength="80" required>
+
+            <label>Contraseña:</label>
+            <input type="password" id="password" minlength="6" required>
+
+            <!-- opcional: si querés mantener estética similar -->
+            <div class="captcha-container">
+                <div
+                    class="h-captcha"
+                    data-sitekey="c1e29b90-67fc-4a54-8de6-a394287af852"
+                    data-theme="dark"
+                ></div>
+            </div>
+
+            <button type="submit">Iniciar sesión</button>
+
+        </form>
+    </div>
+
+    <p id="status"></p>
+</main>
+
+<footer>
+    <p>Creado por Lautaro Hillkirk</p>
+</footer>
+
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
+<script>
+const supabaseKey = "sb_publishable_ut3DRPMELPw-6nCvxSbMjA_Cttmj4FA";
+const supabaseUrl = "https://ftbyjjmvflxlotnkauwd.supabase.co";
+
+const client = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+let lastSubmit = 0;
+
+const form = document.getElementById("loginForm");
+const status = document.getElementById("status");
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (Date.now() - lastSubmit < 5000) {
+        alert("Espera 5 segundos antes de volver a intentar");
+        return;
+    }
+    lastSubmit = Date.now();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    // captcha opcional (si lo querés exigir en login)
+    const captchaToken = window.hcaptcha?.getResponse?.();
+
+    const { data, error } = await client.auth.signInWithPassword({
+        email: email,
+        password: password,
+        options: captchaToken
+            ? { captchaToken }
+            : undefined
+    });
+
+    if (error) {
+        console.error(error);
+        status.innerText = "❌ Error: " + error.message;
+        return;
+    }
+
+    status.innerText = "✅ Login exitoso";
+
+    // guardar sesión
+    localStorage.setItem("session", JSON.stringify(data.session));
+
+    setTimeout(() => {
+        window.location.href = "index.html";
+    }, 1000);
+});
+</script>
+
+</body>
+</html>
