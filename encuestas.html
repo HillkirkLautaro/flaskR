@@ -79,9 +79,9 @@ form.addEventListener("submit", async (e) => {
 
     console.log("Formulario interceptado");
 
-    const pregunta = document.getElementById("pregunta").value.trim();
-    const opcion1 = document.getElementById("opcion1").value.trim();
-    const opcion2 = document.getElementById("opcion2").value.trim();
+    const pregunta = document.getElementById("Pregunta").value.trim();
+    const opcion1 = document.getElementById("Opcion1").value.trim();
+    const opcion2 = document.getElementById("Opcion2").value.trim();
 
     const { error } = await client
         .from("Encuesta")
