@@ -1,0 +1,82 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+header{
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+}
+header h1{
+    margin-left: 20px;
+    color: #353;
+        display: flex;
+    justify-content: center;
+}
+header nav ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    list-style: none;
+}
+header nav ul li a{
+    color: #353;
+    text-decoration: none;
+    margin-right: 15px;
+    justify-content: center;
+}
+header nav ul li a:hover{
+    text-decoration: underline;
+}
+main{
+    text-align: center;
+}
+footer{
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+main p{
+    font-size: 1.2em;
+    margin: 20px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+.botones{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px;
+}
+
+.botones button{
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.botones button:hover{
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.botones button:active{
+    transform: translateY(0);
+}
