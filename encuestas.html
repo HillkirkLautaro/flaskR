@@ -64,6 +64,13 @@
         <p>Creado por Lautaro Hillkirk</p>
     </footer>
     <script>
+const form1 = document.getElementById("encuestaForm");
+
+form1.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    console.log("Formulario interceptado");
+});
 const supabaseKey = "sb_publishable_ut3DRPMELPw-6nCvxSbMjA_Cttmj4FA";
 const supabaseURL = "https://ftbyjjmvflxlotnkauwd.supabase.co";
 
