@@ -7,6 +7,8 @@
 
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
 </head>
 
 <body>
@@ -46,6 +48,12 @@
 
             <p id="counter">0 / 50</p>
 
+            <div
+                class="h-captcha"
+                data-sitekey="c1e29b90-67fc-4a54-8de6-a394287af852"
+                data-theme="dark"
+                ></div>
+
             <button type="submit">Publicar</button>
 
         </form>
@@ -60,7 +68,6 @@
     <p>Creado por Lautaro Hillkirk</p>
 </footer>
 
-<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 <script src="scripts/post.js"></script>
 </body>
 </html>

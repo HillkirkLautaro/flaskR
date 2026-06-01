@@ -8,22 +8,47 @@ const input = document.getElementById("postText");
 const counter = document.getElementById("counter");
 const status = document.getElementById("status");
 
-// contador de caracteres
-input.addEventListener("input", () => {
-    counter.innerText = `${input.value.length} / 50`;
-});
+// ==========================
+// 🔐 PROTEGER FUNCIONALIDAD (como profile.js)
+// ==========================
+async function getUser() {
+    const { data: { user }, error } = await client.auth.getUser();
 
+    if (error || !user) {
+        window.location.href = "login.html";
+        return null;
+    }
+
+    return user;
+}
+
+// ==========================
+// ✍️ SANITIZE
+// ==========================
 function sanitize(text) {
     return text.replace(/</g, "&lt;").replace(/>/g, "&gt;").trim();
 }
 
-// crear post
+// ==========================
+// 📊 CONTADOR
+// ==========================
+input.addEventListener("input", () => {
+    counter.innerText = `${input.value.length} / 50`;
+});
+
+// ==========================
+// 🚀 SUBMIT POST
+// ==========================
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    const user = await getUser();
+    if (!user) return;
+
     const text = sanitize(input.value);
 
-    if (text.length === 0) {
+    // 🔴 VALIDACIONES
+    if (!text) {
         alert("No puedes publicar vacío");
         return;
     }
@@ -33,14 +58,19 @@ form.addEventListener("submit", async (e) => {
         return;
     }
 
-    // usuario logueado
-    const { data: { user } } = await client.auth.getUser();
+    // ==========================
+    // 🤖 CAPTCHA (MISMA LÓGICA SIMPLE)
+    // ==========================
+    const captchaToken = hcaptcha.getResponse();
 
-    if (!user) {
-        alert("Debes iniciar sesión");
+    if (!captchaToken) {
+        alert("Completa el captcha");
         return;
     }
 
+    // ==========================
+    // 💾 INSERT POST
+    // ==========================
     const { error } = await client
         .from("posts")
         .insert([
@@ -56,7 +86,12 @@ form.addEventListener("submit", async (e) => {
         return;
     }
 
+    // ==========================
+    // ✅ SUCCESS STATE
+    // ==========================
     status.innerText = "✅ Post publicado";
     input.value = "";
     counter.innerText = "0 / 50";
+
+    hcaptcha.reset();
 });
