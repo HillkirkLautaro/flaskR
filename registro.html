@@ -37,11 +37,16 @@
                 <input type="email" id="email" maxlength="80" required>
 
                 <label>Contraseña:</label>
-                <input type="password" id="password" minlength="6" required>
+                <div class="password-container">
+                    <input type="password" id="password" minlength="6" required>
+                    <span id="togglePassword" class="eye-icon">👁️</span>
+                </div>
 
                 <label>Confirmar contraseña:</label>
-                <input type="password" id="confirmPassword" minlength="6" required>
-                 <div
+                <div class="password-container">
+                    <input type="password" id="confirmPassword" minlength="6" required>
+                </div>
+                <div
                 class="h-captcha"
                 data-sitekey="c1e29b90-67fc-4a54-8de6-a394287af852"
                 data-theme="dark"
@@ -57,5 +62,6 @@
         <p>Creado por Lautaro Hillkirk</p>
     </footer>
 </body>
+<script src="scripts/password-view.js"></script>
 <script src="scripts/registro.js"></script>
 </html>

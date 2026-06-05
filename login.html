@@ -35,11 +35,12 @@
 
             <label>Email:</label>
             <input type="email" id="email" maxlength="80" required>
-
             <label>Contraseña:</label>
-            <input type="password" id="password" minlength="6" required>
+            <div class="password-container">
+                <input type="password" id="password" minlength="6" required>
+                <span id="togglePassword" class="eye-icon">👁️</span>
+            </div>
 
-            <!-- opcional: si querés mantener estética similar -->
             <div class="captcha-container">
                 <div
                     class="h-captcha"
@@ -59,7 +60,7 @@
 <footer>
     <p>Creado por Lautaro Hillkirk</p>
 </footer>
-
+<script src="scripts/password-view.js"></script>
 <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 <script src="scripts/login.js"></script>
 </body>

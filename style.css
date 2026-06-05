@@ -104,3 +104,17 @@ main p{
     border-radius: 5px;
     cursor: pointer;
 }
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none; /* Evita que se seleccione el emoji al hacer click */
+}
+
+.password-container {
+    position: relative;
+    display: inline-block;
+}
