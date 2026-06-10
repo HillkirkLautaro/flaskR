@@ -51,14 +51,16 @@ async function loadPosts() {
             <small>${new Date(post.created_at).toLocaleString()}</small>
             <hr>
         `;
-
+    
         container.appendChild(div);
     });
-}
-if (data.length < POSTS_PER_PAGE) {
+    if (data.length < POSTS_PER_PAGE) {
     document.getElementById("loadMoreBtn").style.display = "none";
-}
+}}
+
 document.getElementById("loadMoreBtn").addEventListener("click", () => {
     page++;
     loadPosts();
 });
+
+loadPosts();
