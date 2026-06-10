@@ -62,5 +62,8 @@ document.getElementById("loadMoreBtn").addEventListener("click", () => {
     page++;
     loadPosts();
 });
-
+document.getElementById("loadMinusBtn").addEventListener("click", () => {
+    page--;
+    loadPosts();
+});
 loadPosts();
