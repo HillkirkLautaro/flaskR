@@ -11,3 +11,6 @@ Microblog ligero y open-source hecho en Html5-CSS3 y JavaScript
 - 📊 Encuestas anónimas con límite de 2 envíos por IP/hora
 - 🕵️‍♂️ Seguridad básica: protección CSRF, saneamiento de input
 - 🧩 Open source: podés clonar, modificar y desplegar por tu cuenta
+
+## Proximas mejoras
+- Limitar el valor de page en la funcion loadPosts a el máximo de posteos que haya
