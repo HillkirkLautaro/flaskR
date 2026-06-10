@@ -8,8 +8,13 @@ const container = document.getElementById("postsContainer");
 function sanitize(text) {
     return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
+let page = 0;
+const POSTS_PER_PAGE = 3;
 
 async function loadPosts() {
+
+    const from = page * POSTS_PER_PAGE;
+    const to = from + POSTS_PER_PAGE - 1;
 
     const { data, error } = await client
   .from("posts")
@@ -19,7 +24,8 @@ async function loadPosts() {
       created_at,
       profiles(username)
   `)
-  .order("created_at", { ascending: false });
+  .order("created_at", { ascending: false })
+  .range(from, to);
 
     if (error) {
         console.error(error);
@@ -49,5 +55,10 @@ async function loadPosts() {
         container.appendChild(div);
     });
 }
-
-loadPosts();
+if (data.length < POSTS_PER_PAGE) {
+    document.getElementById("loadMoreBtn").style.display = "none";
+}
+document.getElementById("loadMoreBtn").addEventListener("click", () => {
+    page++;
+    loadPosts();
+});
