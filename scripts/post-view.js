@@ -65,9 +65,15 @@ async function loadPosts() {
     document.getElementById("loadMoreBtn").style.display = "none";
 }}
 
-document.getElementById("loadMoreBtn").addEventListener("click", () => {
+document.getElementById("loadMoreBtn").addEventListener("click", async () => {
+
     page++;
-    loadPosts();
+
+    const success = await loadPosts();
+
+    if (!success) {
+        page--;
+    }
 });
 document.getElementById("loadMinusBtn").addEventListener("click", () => {
     if (page > 0) {
