@@ -10,6 +10,7 @@ function sanitize(text) {
 }
 let page = 0;
 const POSTS_PER_PAGE = 3;
+let maxPageReached = false;
 
 async function loadPosts() {
 
@@ -37,6 +38,12 @@ async function loadPosts() {
         container.innerHTML = "<p>No hay posts todavía</p>";
         return;
     }
+    if (!data || data.length === 0) {
+        maxPageReached = true;
+        return;
+    }
+
+    maxPageReached = false;
 
     container.innerHTML = "";
 
@@ -63,7 +70,9 @@ document.getElementById("loadMoreBtn").addEventListener("click", () => {
     loadPosts();
 });
 document.getElementById("loadMinusBtn").addEventListener("click", () => {
-    page--;
-    loadPosts();
+    if (page > 0) {
+        page--;
+        loadPosts();
+    }
 });
 loadPosts();
