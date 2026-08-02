@@ -1,56 +1,46 @@
-const supabaseKey = "sb_publishable_ut3DRPMELPw-6nCvxSbMjA_Cttmj4FA";
 const supabaseUrl = "https://ftbyjjmvflxlotnkauwd.supabase.co";
+const supabaseKey = "sb_publishable_ut3DRPMELPw-6nCvxSbMjA_Cttmj4FA";
 
-const client = window.supabase.createClient(
-    supabaseUrl,
-    supabaseKey
-);
+const client = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-// anti spam
 let lastSubmit = 0;
-
-function sanitize(input) {
-    return input.replace(/</g, "&lt;").replace(/>/g, "&gt;").trim();
-}
-
 const form = document.getElementById("encuestaForm");
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    // 1. Anti-spam de UI
     if (Date.now() - lastSubmit < 5000) {
         alert("Espera 5 segundos antes de enviar otra encuesta");
         return;
     }
-    lastSubmit = Date.now();
 
-    const pregunta = sanitize(document.getElementById("Pregunta").value);
-    const opcion1 = sanitize(document.getElementById("Opcion1").value);
-    const opcion2 = sanitize(document.getElementById("Opcion2").value);
+    // 2. Obtener valores sin sanitizar innecesariamente al guardar
+    const pregunta = document.getElementById("Pregunta").value.trim();
+    const opcion1 = document.getElementById("Opcion1").value.trim();
+    const opcion2 = document.getElementById("Opcion2").value.trim();
 
+    // 3. Validaciones básicas en cliente
     if (pregunta.length < 5) {
-        alert("Pregunta muy corta");
+        alert("La pregunta debe tener al menos 5 caracteres");
         return;
     }
 
     if (opcion1 === opcion2) {
-        alert("Opciones iguales no válidas");
+        alert("Las opciones no pueden ser iguales");
         return;
     }
 
+    lastSubmit = Date.now();
+
+    // 4. Inserción en Supabase
     const { error } = await client
         .from("Encuesta")
-        .insert([
-            {
-                Pregunta: pregunta,
-                Opcion1: opcion1,
-                Opcion2: opcion2
-            }
-        ]);
+        .insert([{ Pregunta: pregunta, Opcion1: opcion1, Opcion2: opcion2 }]);
 
     if (error) {
-        console.error(error);
-        alert(error.message);
+        console.error("Error al insertar:", error);
+        alert("No se pudo crear la encuesta: " + error.message);
         return;
     }
 
