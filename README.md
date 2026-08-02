@@ -1,4 +1,4 @@
-# ☁️ Flaskr (PROYECTO DESCONTINUADO)
+# ☁️ Flaskr (PROYECTO DESCONTINUADO al no tener tráfico SupaBase lo elimina.)
 
 Microblog ligero y open-source hecho en Html5-CSS3 y JavaScript
 
